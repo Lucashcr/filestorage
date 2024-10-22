@@ -1,0 +1,65 @@
+services:
+  # backend:
+  
+  # frontend:
+
+  postgresql:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=filestorage
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.docker/postgresql/data:/var/lib/postgresql/data
+  
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
+    ports:
+      - 9200:9200
+    environment:
+      - node.name=es01
+      - cluster.name=elasticsearch-cluster
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.license.self_generated.type=basic
+    volumes:
+      - escerts:/usr/share/elasticsearch/config/certs
+      - esdata:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.15.3
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+
+  s3mock:
+    image: adobe/s3mock:latest
+    environment:
+      - debug=true
+      - retainFilesOnExit=true
+      - root=files
+    ports:
+      - 9090:9090
+    volumes:
+      - ./.docker/s3mock/files:/files
+
+volumes:
+  escerts:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./.docker/elasticsearch/certs
+      o: bind
+
+  esdata:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./.docker/elasticsearch/data
+      o: bind
