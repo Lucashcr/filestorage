@@ -1,26 +1,12 @@
-import Link from "next/link";
-import SideBar from "./sidebar";
+import { MdBackup } from "react-icons/md";
 
 export default function Header() {
   return (
-    <header className="bg-gradient-to-r from-zinc-500 to-zinc-600 text-white p-4 text-center flex justify-between">
+    <header className="bg-slate-600 text-white px-6 py-4 flex justify-start items-center">
       <div className="flex items-center gap-4">
-        <SideBar />
+        <MdBackup size={35} />
         <h1 className="text-xl font-bold">FileStorage</h1>
       </div>
-      <nav>
-        <ul className="flex gap-4">
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/about">About</Link>
-          </li>
-          <li>
-            <Link href="/contact">Contact</Link>
-          </li>
-        </ul>
-      </nav>
     </header>
   );
 }
