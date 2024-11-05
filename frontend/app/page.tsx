@@ -1,3 +1,8 @@
+"use client"
+
+
+import { toast } from "react-toastify";
+
 export default function Home() {
   return (
     <>
@@ -18,21 +23,25 @@ export default function Home() {
       </button>
       <button
         className="bg-success px-6 py-3 rounded-full"
+        onClick={() => {toast.success("Sucesso")}}
       >
         Upload file
       </button>
       <button
         className="bg-error px-6 py-3 rounded-full"
+        onClick={() => {toast.error("Erro")}}
       >
         Upload file
       </button>
       <button
         className="bg-info px-6 py-3 rounded-full"
+        onClick={() => {toast.info("Informação")}}
       >
         Upload file
       </button>
       <button
         className="bg-warning px-6 py-3 rounded-full"
+        onClick={() => {toast.warning("Aviso")}}
       >
         Upload file
       </button>

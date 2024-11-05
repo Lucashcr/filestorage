@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import ToastContainerProvider from "@/components/toast-provider";
 
 const ubuntuBold = localFont({
   src: "../fonts/Ubuntu-Bold.ttf",
@@ -66,6 +67,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <ToastContainerProvider />
       </body>
     </html>
   );
