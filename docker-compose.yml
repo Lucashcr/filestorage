@@ -38,17 +38,18 @@ services:
     depends_on:
       - elasticsearch
 
-  s3mock:
-    image: adobe/s3mock:latest
+  minio:
+    image: quay.io/minio/minio
+    command: server /data --console-address ":9001"
     environment:
-      - debug=true
-      - retainFilesOnExit=true
-      - root=files
-    ports:
-      - 9090:9090
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=password
     volumes:
-      - ./.docker/s3mock/files:/files
-
+      - ./.docker/minio/data:/data
+    ports:
+      - 9000:9000
+      - 9001:9001
+    
 volumes:
   escerts:
     driver: local
