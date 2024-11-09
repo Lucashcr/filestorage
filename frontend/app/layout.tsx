@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import ToastContainerProvider from "@/components/toast-provider";
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
+import ToastContainerProvider from "@/components/layout/toast-provider";
 
 const ubuntuBold = localFont({
   src: "../fonts/Ubuntu-Bold.ttf",
@@ -63,7 +63,7 @@ export default function RootLayout({
         className={`${ubuntuBold.variable} ${ubuntuBoldItalic.variable} ${ubuntuItalic.variable} ${ubuntuLight.variable} ${ubuntuLightItalic.variable} ${ubuntuMedium.variable} ${ubuntuMediumItalic.variable} ${ubuntuRegular.variable} antialiased font-[family-name:var(--font-ubuntu-regular)] min-h-screen flex flex-col`}
       >
         <Header />
-        <main className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 flex-grow">
+        <main className="flex flex-col items-center flex-grow max-w-[1400px] self-center m-8">
           {children}
         </main>
         <Footer />
