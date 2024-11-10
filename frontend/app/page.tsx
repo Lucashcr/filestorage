@@ -1,4 +1,18 @@
 import UploadButton from "@/components/buttons/upload-button";
+import FilesContainer from "@/components/files/container";
+
+const files = [
+  { id: 0, type: "folder", title: "Documents", size: 16546984 },
+  { id: 1, type: "folder", title: "Photos", size: 68574289 },
+  { id: 2, type: "image", title: "beach.jpg", size: 2987529 },
+  { id: 3, type: "audio", title: "song.mp3", size: 59846512 },
+  { id: 4, type: "video", title: "movie.mp4", size: 7052498526 },
+  { id: 5, type: "document", title: "resume.pdf", size: 270354 },
+  { id: 6, type: "spreadsheet", title: "budget.xlsx", size: 198262 },
+  { id: 7, type: "image", title: "mountain.png", size: 5695984 },
+  { id: 8, type: "audio", title: "podcast.wav", size: 51619841 },
+  { id: 9, type: "text", title: "notes.txt", size: 89674 },
+];
 
 export default function Home() {
   return (
@@ -6,12 +20,7 @@ export default function Home() {
       <div className="w-full flex justify-end mb-4">
         <UploadButton />
       </div>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
-        tempora, dolorum quod cumque sit quibusdam quaerat blanditiis ad unde
-        inventore doloremque quam laudantium iure saepe nisi tempore. Enim,
-        quidem atque.
-      </p>
+      <FilesContainer files={files} />
     </>
   );
 }
