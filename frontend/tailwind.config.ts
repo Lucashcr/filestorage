@@ -14,7 +14,7 @@ const config: Config = {
         foreground: "var(--foreground)",
         primary: "#5F26C5",
         accent: "#7F46E5",
-        secondary: "#5B2777",
+        secondary: "#475569",
         success: "#059669",
         error: "#DC6060",
         info: "#5593EB",
