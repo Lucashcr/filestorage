@@ -14,7 +14,7 @@ function onClickHandler() {
 
 export default function UploadButton(props: UploadButtonProps) {
   const cls = useMemo(() => {
-    let cls = `bg-primary px-6 py-3 rounded-full`;
+    let cls = `bg-primary px-6 py-3 rounded-full hover:bg-accent hover:cursor-pointer transition duration-[300ms]`;
     if (cls) {
       cls += ` ${props.className}`;
     }
