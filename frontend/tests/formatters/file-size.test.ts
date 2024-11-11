@@ -1,4 +1,4 @@
-import fileSizeformatter from "@/components/files/helpers/formatters/file-size";
+import fileSizeformatter from "@/components/files/helpers/file-size-formatter";
 
 describe("File size formatter", () => {
   beforeAll(() => {
