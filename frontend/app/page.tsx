@@ -1,8 +1,8 @@
+import FilesRoot from "@/components/files/root";
+import FileType from "@/types/file";
 import UploadButton from "@/components/buttons/upload-button";
-import FilesGrid from "@/components/files/grid";
-import FilesTable from "@/components/files/table";
 
-const files = [
+const files: FileType[] = [
   { id: 0, type: "folder", title: "Documents", size: 16546984 },
   { id: 1, type: "folder", title: "Photos", size: 68574289 },
   { id: 2, type: "image", title: "beach.jpg", size: 2987529 },
@@ -21,8 +21,7 @@ export default function Home() {
       <div className="w-full flex justify-end mb-4">
         <UploadButton />
       </div>
-      <FilesGrid files={files} />
-      <FilesTable files={files} />
+      <FilesRoot files={files} />
     </>
   );
 }
