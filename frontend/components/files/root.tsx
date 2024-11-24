@@ -12,13 +12,13 @@ type FilesRootProps = {
 };
 
 export default function FilesRoot({ files }: FilesRootProps) {
-  const [layout, setLayout] = useState("list");
+  const [layout, setLayout] = useState("grid");
 
   const listComponent = <FilesList files={files} />;
   const gridComponent = <FilesGrid files={files} />;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="w-full flex flex-col gap-2">
       <FilesSwitcher layout={layout} setLayout={setLayout} />
       {layout == "list" ? listComponent : gridComponent}
     </div>

@@ -63,7 +63,7 @@ export default function RootLayout({
         className={`${ubuntuBold.variable} ${ubuntuBoldItalic.variable} ${ubuntuItalic.variable} ${ubuntuLight.variable} ${ubuntuLightItalic.variable} ${ubuntuMedium.variable} ${ubuntuMediumItalic.variable} ${ubuntuRegular.variable} antialiased font-[family-name:var(--font-ubuntu-regular)] min-h-screen flex flex-col`}
       >
         <Header />
-        <main className="flex flex-col items-center flex-grow max-w-[1400px] self-center m-8">
+        <main className="flex flex-col items-center flex-grow max-w-[1400px] w-full self-center p-8">
           {children}
         </main>
         <Footer />

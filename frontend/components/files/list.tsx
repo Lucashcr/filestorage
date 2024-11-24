@@ -1,5 +1,5 @@
 import FileType from "@/types/file";
-import fileSizeFormatter from "./helpers/file-size-formatter";
+import FileSizeFormatter from "./helpers/file-size-formatter";
 import selectIconType from "./helpers/icon-type-selector";
 
 type FilesListProps = {
@@ -14,9 +14,10 @@ export default function FilesList({ files }: FilesListProps) {
           className="w-full bg-secondary px-4 py-2 rounded-full flex items-center gap-4 hover:cursor-pointer hover:bg-accent transition duration-[300ms]"
           key={file.id}
         >
-          <div>{selectIconType(file.type)({ size: 40 })}</div>
+          <div>{selectIconType(file.type)({ size: 30 })}</div>
           <p className="grow">{file.title}</p>
-          <p>{fileSizeFormatter(file.size)}</p>
+          {/* <p className="text-sm">{fileSizeFormatter(file.size)}</p> */}
+          <FileSizeFormatter size={file.size} className="text-sm" />
         </div>
       ))}
     </div>
