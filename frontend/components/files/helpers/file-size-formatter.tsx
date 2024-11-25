@@ -1,12 +1,5 @@
-"use client";
-
 import { useEffect, useState } from "react";
-
-const multipliers = ["", "k", "M", "G"];
-
-const localeStringOptions = {
-  maximumFractionDigits: 2,
-};
+import formatFileSize from "./format-file-size";
 
 const getLocale = () => {
   if (typeof window !== "undefined") {
@@ -31,13 +24,7 @@ export default function FileSizeFormatter({
     setLocale(getLocale());
   }, []);
 
-  let multiplierIndex = 0;
-  while (size >= 100 && multiplierIndex < multipliers.length - 1) {
-    size /= 1000;
-    multiplierIndex += 1;
-  }
-  const sizeStr = size.toLocaleString(locale, localeStringOptions);
   return (
-    <p className={className}>{`${sizeStr} ${multipliers[multiplierIndex]}B`}</p>
+    <p className={className}>{formatFileSize(size, locale)}</p>
   );
 }

@@ -1,127 +1,122 @@
-import fileSizeformatter from "@/components/files/helpers/file-size-formatter";
+import formatFileSize from "@/components/files/helpers/format-file-size";
 
 describe("File size formatter", () => {
-  beforeAll(() => {
-    global.navigator = {
-      ...global.navigator,
-      language: "pt-BR"
-    };
-  });
+  const locales = ["pt-BR", "en-US"];
 
-  test("Should format files in bytes [units]", () => {
+  test.each(locales)("Should format files in bytes [units]", (locale: string) => {
     const size = 1.23456789;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 1.23.toLocaleString();
+    const localedValue = 1.23.toLocaleString(locale);
     expect(result).toBe(`${localedValue} B`);
   });
 
-  test("Should format files in bytes [tens]", () => {
+  test.each(locales)("Should format files in bytes [tens]", (locale: string) => {
     const size = 12.3456789;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 12.35.toLocaleString();
+    const localedValue = 12.35.toLocaleString(locale);
     expect(result).toBe(`${localedValue} B`);
   });
 
-  test("Should format files in kilobytes [decimals]", () => {
+  test.each(locales)("Should format files in kilobytes [decimals]", (locale: string) => {
     const size = 123.456789;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 0.12.toLocaleString();
+    const localedValue = 0.12.toLocaleString(locale);
     expect(result).toBe(`${localedValue} kB`);
   });
 
-  test("Should format files in kilobytes [units]", () => {
+  test.each(locales)("Should format files in kilobytes [units]", (locale: string) => {
     const size = 1234.56789;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 1.23.toLocaleString();
+    const localedValue = 1.23.toLocaleString(locale);
     expect(result).toBe(`${localedValue} kB`);
   });
 
-  test("Should format files in kilobytes [tens]", () => {
+  test.each(locales)("Should format files in kilobytes [tens]", (locale: string) => {
     const size = 12345.6789;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 12.35.toLocaleString();
+    const localedValue = 12.35.toLocaleString(locale);
     expect(result).toBe(`${localedValue} kB`);
   });
 
-  test("Should format files in megabytes [decimals]", () => {
+  test.each(locales)("Should format files in megabytes [decimals]", (locale: string) => {
     const size = 123456.789;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 0.12.toLocaleString();
+    const localedValue = 0.12.toLocaleString(locale);
     expect(result).toBe(`${localedValue} MB`);
   });
 
-  test("Should format files in megabytes [units]", () => {
+  test.each(locales)("Should format files in megabytes [units]", (locale: string) => {
     const size = 1234567.89;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 1.23.toLocaleString();
+    const localedValue = 1.23.toLocaleString(locale);
     expect(result).toBe(`${localedValue} MB`);
   });
 
-  test("Should format files in megabytes [tens]", () => {
+  test.each(locales)("Should format files in megabytes [tens]", (locale: string) => {
     const size = 12345678.9;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 12.35.toLocaleString();
+    const localedValue = 12.35.toLocaleString(locale);
     expect(result).toBe(`${localedValue} MB`);
   });
 
-  test("Should format files in gigabytes [decimals]", () => {
+  test.each(locales)("Should format files in gigabytes [decimals]", (locale: string) => {
     const size = 123456789;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 0.12.toLocaleString();
+    const localedValue = 0.12.toLocaleString(locale);
     expect(result).toBe(`${localedValue} GB`);
   });
 
-  test("Should format files in gigabytes [units]", () => {
+  test.each(locales)("Should format files in gigabytes [units]", (locale: string) => {
     const size = 1234567890;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 1.23.toLocaleString();
+    const localedValue = 1.23.toLocaleString(locale);
     expect(result).toBe(`${localedValue} GB`);
   });
 
-  test("Should format files in gigabytes [tens]", () => {
+  test.each(locales)("Should format files in gigabytes [tens]", (locale: string) => {
     const size = 12345678900;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 12.35.toLocaleString();
+    const localedValue = 12.35.toLocaleString(locale);
     expect(result).toBe(`${localedValue} GB`);
   });
 
-  test("Should format files in gigabytes [hundreds]", () => {
+  test.each(locales)("Should format files in gigabytes [hundreds]", (locale: string) => {
     const size = 123456789000;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 123.46.toLocaleString();
+    const localedValue = 123.46.toLocaleString(locale);
     expect(result).toBe(`${localedValue} GB`);
   });
 
-  test("Should format files in gigabytes [thousands]", () => {
+  test.each(locales)("Should format files in gigabytes [thousands]", (locale: string) => {
     const size = 1234567890000;
     
-    const result = fileSizeformatter(size);
+    const result = formatFileSize(size, locale);
     
-    const localedValue = 1234.57.toLocaleString();
+    const localedValue = 1234.57.toLocaleString(locale);
     expect(result).toBe(`${localedValue} GB`);
   });
 });
