@@ -1,18 +1,11 @@
-"use client";
-
-import React, { useMemo } from "react";
-import { toast } from "react-toastify";
+import { useMemo } from "react";
 
 type UploadButtonProps = {
-  chilren?: typeof React.Children;
   className?: string;
+  onClick: () => void;
 };
 
-function onClickHandler() {
-  toast("OK!");
-}
-
-export default function UploadButton(props: UploadButtonProps) {
+export default function UploadFileDialogButton(props: UploadButtonProps) {
   const cls = useMemo(() => {
     let cls = `bg-primary px-6 py-3 rounded-full hover:bg-accent hover:cursor-pointer transition duration-[300ms]`;
     if (cls) {
@@ -21,7 +14,7 @@ export default function UploadButton(props: UploadButtonProps) {
     return cls;
   }, [props.className]);
   return (
-    <button className={cls} onClick={onClickHandler}>
+    <button className={cls} onClick={props.onClick}>
       Upload file
     </button>
   );

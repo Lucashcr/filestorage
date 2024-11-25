@@ -5,5 +5,5 @@
 - [x] Implements files listing component (list layout)
 - [x] Implements files listing component switch ( grid <-> list )
 - [x] Fix width in list layout
-- [ ] Implements file upload dialog
+- [x] Implements file upload dialog
 - [ ] Implements login page

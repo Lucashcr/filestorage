@@ -1,6 +1,6 @@
 import FilesRoot from "@/components/files/root";
 import FileType from "@/types/file";
-import UploadButton from "@/components/buttons/upload-button";
+import UploadFileDialog from "@/components/dialogs/file-upload/root";
 
 const files: FileType[] = [
   { id: 0, type: "folder", title: "Documents", size: 16546984 },
@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       <div className="w-full flex justify-end mb-4">
-        <UploadButton />
+        <UploadFileDialog />
       </div>
       <FilesRoot files={files} />
     </>
