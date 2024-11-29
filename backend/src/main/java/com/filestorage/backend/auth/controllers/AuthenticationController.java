@@ -50,8 +50,7 @@ public class AuthenticationController {
                 encryptedPassword,
                 data.firstName(),
                 data.lastName(),
-                Role.CUSTOMER
-        );
+                Role.CUSTOMER);
 
         userRepository.save(newUser);
 
@@ -59,8 +58,7 @@ public class AuthenticationController {
                 newUser.getEmail(),
                 newUser.getFirstName(),
                 newUser.getLastName(),
-                newUser.getRole().toString()
-        );
+                newUser.getRole().toString());
         return ResponseEntity.ok().body(userResponse);
     }
 }
