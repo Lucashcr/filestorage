@@ -61,7 +61,6 @@ public class SecurityConfiguration {
         String[] allowedOriginList = allowedOrigins.split(",");
         for (var origin : allowedOriginList) {
             config.addAllowedOrigin(origin);
-            System.out.println(origin);
         }
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");

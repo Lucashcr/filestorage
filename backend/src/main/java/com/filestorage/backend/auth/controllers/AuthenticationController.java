@@ -1,6 +1,7 @@
 package com.filestorage.backend.auth.controllers;
 
 import com.filestorage.backend.auth.DTOs.AuthenticationDTO;
+import com.filestorage.backend.auth.DTOs.ErrorResponseDTO;
 import com.filestorage.backend.auth.DTOs.JwtLoginDTO;
 import com.filestorage.backend.auth.DTOs.RegistrationDTO;
 import com.filestorage.backend.auth.DTOs.UserResponseDTO;
@@ -31,11 +32,16 @@ public class AuthenticationController {
     private UserRepository userRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtLoginDTO> login(@RequestBody AuthenticationDTO data) {
-        var authentication = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var auth = authenticationManager.authenticate(authentication);
-        var token = jwtTokenService.generateToken((User) auth.getPrincipal());
-        return ResponseEntity.ok().body(new JwtLoginDTO(token));
+    public ResponseEntity<?> login(@RequestBody AuthenticationDTO data) {
+        try {
+            var authentication = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+            var auth = authenticationManager.authenticate(authentication);
+            var token = jwtTokenService.generateToken((User) auth.getPrincipal());
+            return ResponseEntity.ok().body(new JwtLoginDTO(token));
+        } catch (Exception e) {
+            ErrorResponseDTO errorResponse = new ErrorResponseDTO("Invalid user or password");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
     }
 
     @PostMapping("/register")
