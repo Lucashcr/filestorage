@@ -19,7 +19,7 @@ export default function Header() {
       setLogActionTitle("Entrar");
       setLogActionHref("/auth/login");
     }
-  }, [cookies.authToken])
+  }, [cookies.authToken]);
 
   return (
     <header className="bg-primary text-white px-6 py-4 flex justify-between items-center">
@@ -27,9 +27,19 @@ export default function Header() {
         <MdBackup size={35} />
         <h1 className="text-xl font-bold">FileStorage</h1>
       </div>
-      <div>
-        <Link href="/" className="px-4 py-2 rounded-full hover:bg-accent transition duration-[200ms]">Arquivos</Link>
-        <Link href={logActionHref} className="px-4 py-2 rounded-full hover:bg-accent transition duration-[200ms]">{logActionTitle}</Link>
+      <div className="flex gap-2">
+        <Link
+          href="/"
+          className="px-4 py-1 rounded-full hover:bg-accent transition duration-[200ms]"
+        >
+          Arquivos
+        </Link>
+        <Link
+          href={logActionHref}
+          className="px-4 py-1 rounded-full hover:bg-accent transition duration-[200ms]"
+        >
+          {logActionTitle}
+        </Link>
       </div>
     </header>
   );
