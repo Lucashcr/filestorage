@@ -1,30 +1,37 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
-import { FormEvent, use, useState } from "react";
+import { FormEvent, useState } from "react";
 
 import apiClient from "@/services/api";
-import Link from "next/link";
+import PasswordValidator from "@/services/password-validator";
 import EmailValidator from "@/services/email-validator";
 
-const SECONDS_PER_HOUR = 3600;
-
-type LoginPageProps = {
-  searchParams: Promise<{ next: string | undefined }>;
+type RegisterFormData = {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName?: string;
 };
 
-export default function LoginPage(props: LoginPageProps) {
-  const searchParams = use(props.searchParams);
-
-  const setCookie = useCookies()[1];
+export default function LoginPage() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState<RegisterFormData>({
+    email: "",
+    password: "",
+    firstName: "",
+  });
 
   const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const message = PasswordValidator.validate(formData.password);
+    if (message) {
+      toast.error(message);
+      return;
+    }
 
     const validEmail = EmailValidator.validate(formData.email);
     if (!validEmail) {
@@ -33,20 +40,14 @@ export default function LoginPage(props: LoginPageProps) {
     }
 
     try {
-      const response = await apiClient.post("/auth/login", formData);
-      const responseData = response.data;
-
-      const options = {
-        maxAge: 24 * SECONDS_PER_HOUR,
-        path: "/",
-      };
-      setCookie("authToken", responseData.token, options);
-
-      toast.success("Usuário logado com sucesso!");
-      router.push(searchParams.next || "/");
+      await apiClient.post("/auth/register", formData);
+      toast.success("Usuário registrado com sucesso!");
+      router.push("/auth/login");
     } catch (error) {
       console.error(error);
-      toast.error("Erro ao tentar fazer login");
+      toast.error(
+        "Erro ao tentar registrar usuário! Verifique os dados enviados."
+      );
     }
   };
 
@@ -55,6 +56,32 @@ export default function LoginPage(props: LoginPageProps) {
       <div className="w-[400px] bg-secondary p-6 rounded-xl shadow flex flex-col gap-4">
         <h1 className="text-3xl font-bold">Entrar</h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmitForm}>
+          <fieldset>
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              value={formData.firstName}
+              className="w-full bg-gray-700 px-4 py-2 rounded-lg"
+              placeholder="Nome"
+              onChange={(e) => {
+                setFormData({ ...formData, firstName: e.target.value });
+              }}
+            />
+          </fieldset>
+          <fieldset>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              value={formData.lastName}
+              className="w-full bg-gray-700 px-4 py-2 rounded-lg"
+              placeholder="Sobrenome (Opcional)"
+              onChange={(e) => {
+                setFormData({ ...formData, lastName: e.target.value });
+              }}
+            />
+          </fieldset>
           <fieldset>
             <input
               type="text"
@@ -88,12 +115,6 @@ export default function LoginPage(props: LoginPageProps) {
             Confirmar
           </button>
         </form>
-        <Link
-          href="/auth/register"
-          className="text-center text-gray-300 hover:text-accent transition duration-[200ms]"
-        >
-          Não tenho cadastrado
-        </Link>
       </div>
     </div>
   );

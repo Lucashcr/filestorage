@@ -9,6 +9,9 @@ import com.filestorage.backend.auth.entities.User;
 import com.filestorage.backend.auth.helpers.Role;
 import com.filestorage.backend.auth.repositories.UserRepository;
 import com.filestorage.backend.auth.services.JwtTokenService;
+
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
+    private Logger logger = Logger.getLogger(AuthenticationController.class.getName());
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -45,9 +50,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> register(@RequestBody RegistrationDTO data) {
+    public ResponseEntity<?> register(@RequestBody RegistrationDTO data) {
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO("Error while saving user");
         if (this.userRepository.findByEmail(data.email()) != null) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(errorResponse);
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
@@ -58,13 +64,17 @@ public class AuthenticationController {
                 data.lastName(),
                 Role.CUSTOMER);
 
-        userRepository.save(newUser);
+        try {
+            userRepository.save(newUser);
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
 
         var userResponse = new UserResponseDTO(
                 newUser.getEmail(),
                 newUser.getFirstName(),
-                newUser.getLastName(),
-                newUser.getRole().toString());
+                newUser.getLastName());
         return ResponseEntity.ok().body(userResponse);
     }
 }

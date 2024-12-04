@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
-const disabledAuthMiddlewareRoutes = ["/auth/login"];
+const disabledAuthMiddlewareRoutes = ["/auth/login", "/auth/register"];
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
