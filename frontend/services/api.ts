@@ -3,18 +3,14 @@ import { Cookies } from "react-cookie";
 import { toast } from "react-toastify";
 import Router from "next/router";
 
-const apiService = axios.create({
-  baseURL: "http://localhost:8080",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  xsrfCookieName: "XSRF-TOKEN",
-  xsrfHeaderName: "X-CSRF-TOKEN",
-});
-
 const cookies = new Cookies();
 
-apiService.interceptors.request.use(
+const apiClient = axios.create({
+  baseURL: "http://localhost:8080",
+  withCredentials: true
+});
+
+apiClient.interceptors.request.use(
   (config) => {
     const token = cookies.get("authToken");
     if (token) {
@@ -27,7 +23,7 @@ apiService.interceptors.request.use(
   }
 );
 
-apiService.interceptors.response.use(
+apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
@@ -38,4 +34,4 @@ apiService.interceptors.response.use(
   }
 );
 
-export default apiService;
+export default apiClient;

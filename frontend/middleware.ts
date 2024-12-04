@@ -6,9 +6,7 @@ const disabledAuthMiddlewareRoutes = ["/auth/login"];
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   if (disabledAuthMiddlewareRoutes.includes(request.nextUrl.pathname)) {
-    return NextResponse.redirect(
-      new URL("/", request.url)
-    );
+    return;
   }
 
   const authToken = request.cookies.get("authToken");
