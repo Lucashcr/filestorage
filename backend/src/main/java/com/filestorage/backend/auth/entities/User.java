@@ -1,6 +1,7 @@
 package com.filestorage.backend.auth.entities;
 
 import com.filestorage.backend.auth.helpers.Role;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
