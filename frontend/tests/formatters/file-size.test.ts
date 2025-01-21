@@ -35,7 +35,7 @@ describe("File size formatter", () => {
     
     const result = formatFileSize(size, locale);
     
-    const localedValue = 1.23.toLocaleString(locale);
+    const localedValue = 1.21.toLocaleString(locale);
     expect(result).toBe(`${localedValue} kB`);
   });
 
@@ -44,7 +44,7 @@ describe("File size formatter", () => {
     
     const result = formatFileSize(size, locale);
     
-    const localedValue = 12.35.toLocaleString(locale);
+    const localedValue = 12.06.toLocaleString(locale);
     expect(result).toBe(`${localedValue} kB`);
   });
 
@@ -62,7 +62,7 @@ describe("File size formatter", () => {
     
     const result = formatFileSize(size, locale);
     
-    const localedValue = 1.23.toLocaleString(locale);
+    const localedValue = 1.18.toLocaleString(locale);
     expect(result).toBe(`${localedValue} MB`);
   });
 
@@ -71,7 +71,7 @@ describe("File size formatter", () => {
     
     const result = formatFileSize(size, locale);
     
-    const localedValue = 12.35.toLocaleString(locale);
+    const localedValue = 11.77.toLocaleString(locale);
     expect(result).toBe(`${localedValue} MB`);
   });
 
@@ -80,7 +80,7 @@ describe("File size formatter", () => {
     
     const result = formatFileSize(size, locale);
     
-    const localedValue = 0.12.toLocaleString(locale);
+    const localedValue = 0.11.toLocaleString(locale);
     expect(result).toBe(`${localedValue} GB`);
   });
 
@@ -89,7 +89,7 @@ describe("File size formatter", () => {
     
     const result = formatFileSize(size, locale);
     
-    const localedValue = 1.23.toLocaleString(locale);
+    const localedValue = 1.15.toLocaleString(locale);
     expect(result).toBe(`${localedValue} GB`);
   });
 
@@ -98,7 +98,7 @@ describe("File size formatter", () => {
     
     const result = formatFileSize(size, locale);
     
-    const localedValue = 12.35.toLocaleString(locale);
+    const localedValue = 11.5.toLocaleString(locale);
     expect(result).toBe(`${localedValue} GB`);
   });
 
@@ -107,7 +107,7 @@ describe("File size formatter", () => {
     
     const result = formatFileSize(size, locale);
     
-    const localedValue = 123.46.toLocaleString(locale);
+    const localedValue = 114.98.toLocaleString(locale);
     expect(result).toBe(`${localedValue} GB`);
   });
 
@@ -116,7 +116,7 @@ describe("File size formatter", () => {
     
     const result = formatFileSize(size, locale);
     
-    const localedValue = 1234.57.toLocaleString(locale);
+    const localedValue = 1149.78.toLocaleString(locale);
     expect(result).toBe(`${localedValue} GB`);
   });
 });

@@ -7,7 +7,7 @@ const localeStringOptions = {
 export default function formatFileSize(size: number, locale: string): string {
   let multiplierIndex = 0;
   while (size >= 100 && multiplierIndex < multipliers.length - 1) {
-    size /= 1000;
+    size /= 1024;
     multiplierIndex += 1;
   }
   const sizeStr = size.toLocaleString(locale, localeStringOptions);
