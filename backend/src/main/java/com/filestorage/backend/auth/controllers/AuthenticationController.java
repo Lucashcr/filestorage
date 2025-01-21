@@ -9,6 +9,7 @@ import com.filestorage.backend.auth.entities.User;
 import com.filestorage.backend.auth.helpers.Role;
 import com.filestorage.backend.auth.repositories.UserRepository;
 import com.filestorage.backend.auth.services.JwtTokenService;
+import com.filestorage.backend.files.repositories.BucketRepository;
 
 import java.util.logging.Logger;
 
@@ -35,6 +36,9 @@ public class AuthenticationController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BucketRepository bucketRepository;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationDTO data) {
@@ -66,6 +70,13 @@ public class AuthenticationController {
 
         try {
             userRepository.save(newUser);
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
+        try {
+            bucketRepository.createBucket(newUser.getId().toString());
         } catch (Exception e) {
             logger.severe(e.getMessage());
             return ResponseEntity.badRequest().body(errorResponse);

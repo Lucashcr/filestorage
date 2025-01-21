@@ -9,6 +9,21 @@
             "name": "api.security.cors.allowed-origins",
             "type": "java.lang.String",
             "description": "A description for CORS allowed origins"
+        },
+        {
+            "name": "bucket.endpoint",
+            "type": "java.lang.String",
+            "description": "A description for 'bucket.endpoint'"
+        },
+        {
+            "name": "bucket.access-key",
+            "type": "java.lang.String",
+            "description": "A description for 'bucket.access-key'"
+        },
+        {
+            "name": "bucket.secret-key",
+            "type": "java.lang.String",
+            "description": "A description for 'bucket.secret-key'"
         }
     ]
 }
