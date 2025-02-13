@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +27,11 @@ public class BucketRepository {
     private static String secretKey;
     private final MinioClient client;
 
-    public BucketRepository(Environment env) {
+    @Autowired
+    private final FilesRepository filesRepository;
+
+    public BucketRepository(Environment env, FilesRepository filesRepository) {
+        this.filesRepository = filesRepository;
         endpoint = env.getProperty("bucket.endpoint");
         accessKey = env.getProperty("bucket.access-key");
         secretKey = env.getProperty("bucket.secret-key");
@@ -43,11 +50,16 @@ public class BucketRepository {
         return client.bucketExists(bucketExistsArgs);
     }
 
-    public boolean fileExists(String bucketName, String objectName)
+    public boolean fileExists(String bucketName, UUID fileId)
             throws InvalidKeyException, IOException, MinioException, NoSuchAlgorithmException {
+        Optional<String> fileTitle = filesRepository.findTitleById(fileId);
+        if (fileTitle.isEmpty()) {
+            return false;
+        }
+
         GetObjectArgs getObjectArgs = GetObjectArgs.builder()
                 .bucket(bucketName)
-                .object(objectName)
+                .object(fileTitle.get())
                 .build();
 
         try (InputStream stream = client.getObject(getObjectArgs)) {
@@ -65,11 +77,11 @@ public class BucketRepository {
         client.makeBucket(makeBucketArgs);
     }
 
-    public String getDownloadFileUrl(String bucketName, String objectName)
+    public String getDownloadFileUrl(String bucketName, String fileTitle)
             throws ErrorResponseException, InvalidKeyException, IOException, MinioException, NoSuchAlgorithmException {
         GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
                 .bucket(bucketName)
-                .object(objectName)
+                .object(fileTitle)
                 .expiry(60 * 1)
                 .method(Method.GET)
                 .build();
