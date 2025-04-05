@@ -1,4 +1,4 @@
-import formatFileSize from "@/components/files/helpers/format-file-size";
+import formatFileSize from "@/utils/format-file-size";
 
 type FileSizeFormatterProps = {
   size: number;

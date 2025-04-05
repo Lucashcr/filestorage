@@ -1,5 +1,5 @@
 import FileType from "@/types/file";
-import selectIconType from "./helpers/icon-type-selector";
+import selectIconType from "@/utils/icon-type-selector";
 import FileSizeFormatter from "./helpers/file-size-formatter";
 import FileDownloadIcon from "./helpers/file-download-icon";
 

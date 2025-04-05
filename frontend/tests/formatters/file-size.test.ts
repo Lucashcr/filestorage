@@ -1,4 +1,4 @@
-import formatFileSize from "@/components/files/helpers/format-file-size";
+import formatFileSize from "@/utils/format-file-size";
 
 describe("File size formatter", () => {
   const locales = ["pt-BR", "en-US"];

@@ -1,6 +1,6 @@
 import FileType from "@/types/file";
 import FileSizeFormatter from "./helpers/file-size-formatter";
-import selectIconType from "./helpers/icon-type-selector";
+import selectIconType from "@/utils/icon-type-selector";
 import FileDownloadIcon from "./helpers/file-download-icon";
 
 type FilesListProps = {
