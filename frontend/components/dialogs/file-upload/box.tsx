@@ -39,6 +39,27 @@ export default function UploadFileDialogBox({
     return null;
   }
 
+  function SelectedFileList() {
+    return (
+      <ul>
+        {selectedFiles.map((file, index) => (
+          <li key={index} className="flex gap-2">
+            <span className="grow truncate">{file.name}</span>
+            <span className="text-nowrap">{formatFileSize(file.size)}</span>
+            <span className="hover:cursor-pointer hover:scale-[1.2]">
+              <MdClose
+                size={25}
+                onClick={() => {
+                  setSelectedFiles(selectedFiles.filter((f) => f !== file));
+                }}
+              />
+            </span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
@@ -72,14 +93,6 @@ export default function UploadFileDialogBox({
               Select
             </button>
             <span className="grow">{getFilesCount(selectedFiles)}</span>
-            {/* <span className="hover:cursor-pointer hover:scale-[1.2]">
-              <MdClose
-                size={25}
-                onClick={() => {
-                  setSelectedFiles([]);
-                }}
-              />
-            </span> */}
             <button
               className="bg-primary px-4 py-1 rounded-full hover:bg-accent"
               onClick={() => {
@@ -90,26 +103,7 @@ export default function UploadFileDialogBox({
             </button>
           </div>
           <div className="w-full">
-            <ul>
-              {selectedFiles.map((file, index) => (
-                <li key={index} className="flex gap-2">
-                  <span className="grow truncate">{file.name}</span>
-                  <span className="text-nowrap">
-                    {formatFileSize(file.size)}
-                  </span>
-                  <span className="hover:cursor-pointer hover:scale-[1.2]">
-                    <MdClose
-                      size={25}
-                      onClick={() => {
-                        setSelectedFiles(
-                          selectedFiles.filter(f => f !== file)
-                        )
-                      }}
-                    />
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <SelectedFileList />
           </div>
         </div>
         <div className="flex justify-end gap-2">
