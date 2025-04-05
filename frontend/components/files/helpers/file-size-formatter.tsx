@@ -1,13 +1,4 @@
-import { useEffect, useState } from "react";
-import formatFileSize from "./format-file-size";
-
-const getLocale = () => {
-  if (typeof window !== "undefined") {
-    return navigator.language || "en-US";
-  } else {
-    return "en-US";
-  }
-};
+import formatFileSize from "@/components/files/helpers/format-file-size";
 
 type FileSizeFormatterProps = {
   size: number;
@@ -18,13 +9,7 @@ export default function FileSizeFormatter({
   size,
   className,
 }: FileSizeFormatterProps) {
-  const [locale, setLocale] = useState("en-US");
-
-  useEffect(() => {
-    setLocale(getLocale());
-  }, []);
-
   return (
-    <p className={className}>{formatFileSize(size, locale)}</p>
+    <p className={className}>{formatFileSize(size)}</p>
   );
 }
