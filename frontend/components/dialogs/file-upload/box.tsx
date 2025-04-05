@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import UploadFileDialogDropzone from "@/components/dialogs/file-upload/dropzone";
 import { MdClose } from "react-icons/md";
+import formatFileSize from "@/utils/format-file-size";
 
 type UploadFileDialogBoxProps = {
   isOpen: boolean;
@@ -52,7 +53,7 @@ export default function UploadFileDialogBox({
           files={selectedFiles}
           setFiles={setSelectedFiles}
         />
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col items-center gap-3">
           <input
             type="file"
             ref={hiddenFileInput}
@@ -60,19 +61,56 @@ export default function UploadFileDialogBox({
             onChange={handleChangeFileInput}
             multiple
           />
-          <button
-            className="bg-primary px-4 py-1 rounded-full hover:bg-accent"
-            onClick={() => {
-              if (!hiddenFileInput.current) return;
-              hiddenFileInput.current.click();
-            }}
-          >
-            Select
-          </button>
-          <span className="grow">{getFilesCount(selectedFiles)}</span>
-          <span className="hover:cursor-pointer hover:scale-[1.2]">
-            <MdClose size={25} onClick={() => {setSelectedFiles([])}} />
-          </span>
+          <div className="w-full flex items-center gap-2">
+            <button
+              className="bg-primary px-4 py-1 rounded-full hover:bg-accent"
+              onClick={() => {
+                if (!hiddenFileInput.current) return;
+                hiddenFileInput.current.click();
+              }}
+            >
+              Select
+            </button>
+            <span className="grow">{getFilesCount(selectedFiles)}</span>
+            {/* <span className="hover:cursor-pointer hover:scale-[1.2]">
+              <MdClose
+                size={25}
+                onClick={() => {
+                  setSelectedFiles([]);
+                }}
+              />
+            </span> */}
+            <button
+              className="bg-primary px-4 py-1 rounded-full hover:bg-accent"
+              onClick={() => {
+                setSelectedFiles([]);
+              }}
+            >
+              Clear
+            </button>
+          </div>
+          <div className="w-full">
+            <ul>
+              {selectedFiles.map((file, index) => (
+                <li key={index} className="flex gap-2">
+                  <span className="grow truncate">{file.name}</span>
+                  <span className="text-nowrap">
+                    {formatFileSize(file.size)}
+                  </span>
+                  <span className="hover:cursor-pointer hover:scale-[1.2]">
+                    <MdClose
+                      size={25}
+                      onClick={() => {
+                        setSelectedFiles(
+                          selectedFiles.filter(f => f !== file)
+                        )
+                      }}
+                    />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <div className="flex justify-end gap-2">
           <button
@@ -84,8 +122,8 @@ export default function UploadFileDialogBox({
           <button
             onClick={() => {
               selectedFiles.forEach((file) => {
-                console.log(file)
-              })
+                console.log(file);
+              });
             }}
             className="px-4 py-2 bg-primary rounded hover:bg-accent"
           >
