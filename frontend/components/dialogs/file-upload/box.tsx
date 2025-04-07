@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import UploadFileDialogDropzone from "@/components/dialogs/file-upload/dropzone";
 import { MdClose } from "react-icons/md";
 import formatFileSize from "@/utils/format-file-size";
+import handleUploadFile from "@/services/file-uploader";
 
 type UploadFileDialogBoxProps = {
   isOpen: boolean;
@@ -114,11 +115,7 @@ export default function UploadFileDialogBox({
             Cancel
           </button>
           <button
-            onClick={() => {
-              selectedFiles.forEach((file) => {
-                console.log(file);
-              });
-            }}
+            onClick={() => handleUploadFile(selectedFiles)}
             className="px-4 py-2 bg-primary rounded hover:bg-accent"
           >
             Confirm

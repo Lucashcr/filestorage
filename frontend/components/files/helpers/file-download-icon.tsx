@@ -15,15 +15,10 @@ type BucketDownloadResponse = {
 
 export default function FileDownloadIcon({ file }: FileDownloadIconProps) {
   async function onClickHandler() {
-    const response: BucketDownloadResponse = await apiClient.post(
-      "/bucket/download",
-      {
-        file: `${file.path}${file.title}`,
-      }
-    );
+    const response: BucketDownloadResponse = await apiClient.get(`/bucket/download/${file.id}`);
 
     if (!response.data) {
-      toast.error("Não foi possível fazer o download do arquivo");
+      toast.error(`Não foi possível fazer o download do arquivo: ${file.title}`);
       return;
     }
 
@@ -32,7 +27,7 @@ export default function FileDownloadIcon({ file }: FileDownloadIconProps) {
     });
 
     if (!responseFile.data) {
-      toast.error("Não foi possível fazer o download do arquivo");
+      toast.error(`Não foi possível fazer o download do arquivo: ${file.title}`);
       return;
     }
 

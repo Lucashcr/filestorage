@@ -15,7 +15,7 @@ export default function UploadFileDialogButton(props: UploadButtonProps) {
   }, [props.className]);
   return (
     <button className={cls} onClick={props.onClick}>
-      Upload file
+      Enviar arquivo
     </button>
   );
 }

@@ -1,6 +1,7 @@
 package com.filestorage.backend.files.controllers;
 
 import com.filestorage.backend.auth.entities.User;
+import com.filestorage.backend.files.DTOs.CreateFileDTO;
 import com.filestorage.backend.files.entities.File;
 import com.filestorage.backend.files.repositories.FilesRepository;
 
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("files")
@@ -36,4 +40,10 @@ public class FilesController {
         return filesRepository.findByUserId(user.getId());
     }
 
+    @PostMapping
+    public File saveNewFile(@AuthenticationPrincipal User user, @RequestBody CreateFileDTO file) {
+        File fileToSave = new File(null, file.type(), file.title(), file.path(), file.size(), user.getId());
+        File responseFile = filesRepository.save(fileToSave);
+        return responseFile;
+    }
 }

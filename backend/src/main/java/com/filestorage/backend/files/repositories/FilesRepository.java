@@ -18,4 +18,6 @@ public interface FilesRepository extends JpaRepository<File, UUID> {
     
     @Query("SELECT f.title FROM File f WHERE f.id = :id")
     @NonNull Optional<String> findTitleById(@NonNull UUID id);
+
+    
 }

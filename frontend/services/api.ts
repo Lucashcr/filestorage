@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { toast } from "react-toastify";
-import Router from "next/router";
+import { redirect } from "next/navigation";
 
 const cookies = new Cookies();
 
@@ -26,9 +26,10 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
+    if (error.response.status === 401 && typeof window !== 'undefined') {
+      cookies.remove("authToken");
       toast.error("Usuário não autenticado.");
-      Router.push("/login")
+      return redirect("/auth/login")
     }
     return Promise.reject(error);
   }

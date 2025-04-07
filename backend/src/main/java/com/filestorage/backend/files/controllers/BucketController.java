@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.filestorage.backend.auth.controllers.AuthenticationController;
 import com.filestorage.backend.auth.entities.User;
+import com.filestorage.backend.files.DTOs.FileUrlResponseDTO;
+import com.filestorage.backend.files.DTOs.GetUploadUrlDto;
 import com.filestorage.backend.files.repositories.BucketRepository;
 import com.filestorage.backend.files.repositories.FilesRepository;
-
-final record FileUrlResponseDTO(String url) {
-}
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("bucket")
@@ -48,7 +48,7 @@ public class BucketController {
         }
     }
 
-    @GetMapping("/{fileId}")
+    @GetMapping("/download/{fileId}")
     public ResponseEntity<?> getDownloadFileUrl(@AuthenticationPrincipal User user, @PathVariable UUID fileId) {
         String bucketName = user.getId().toString();
         try {
@@ -70,6 +70,24 @@ public class BucketController {
             System.out.println("fileTitle: " + fileTitle.get());
             
             String fileUrl = bucketRepository.getDownloadFileUrl(bucketName, fileTitle.get());
+            FileUrlResponseDTO response = new FileUrlResponseDTO(fileUrl);
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("generate-upload-url")
+    public ResponseEntity<?> getUploadFileUrl(@AuthenticationPrincipal User user, @RequestBody GetUploadUrlDto data) {
+        String bucketName = user.getId().toString();
+        
+        try {
+            if (!bucketRepository.bucketExists(bucketName)) {
+                logger.info("Tried to download file from non-existent bucket: " + bucketName);
+                return ResponseEntity.badRequest().body("Bucket does not exist");
+            }
+
+            String fileUrl = bucketRepository.getUploadFileUrl(bucketName, data.filename());
             FileUrlResponseDTO response = new FileUrlResponseDTO(fileUrl);
             return ResponseEntity.ok().body(response);
         } catch (Exception e) {
