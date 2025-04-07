@@ -1,5 +1,7 @@
+import { UUID } from "crypto";
+
 type FileType = {
-  id: number;
+  id: UUID;
   type: string;
   title: string;
   path: string;

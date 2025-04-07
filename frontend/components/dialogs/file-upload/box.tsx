@@ -5,6 +5,7 @@ import UploadFileDialogDropzone from "@/components/dialogs/file-upload/dropzone"
 import { MdClose } from "react-icons/md";
 import formatFileSize from "@/utils/format-file-size";
 import handleUploadFile from "@/services/file-uploader";
+import { useFilesListContext } from "@/contexts/files-list";
 
 type UploadFileDialogBoxProps = {
   isOpen: boolean;
@@ -29,6 +30,7 @@ export default function UploadFileDialogBox({
 }: UploadFileDialogBoxProps) {
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const { addFile } = useFilesListContext();
 
   function handleChangeFileInput(event: React.ChangeEvent<HTMLInputElement>) {
     if (!event.target.files) return;
@@ -115,7 +117,10 @@ export default function UploadFileDialogBox({
             Cancel
           </button>
           <button
-            onClick={() => handleUploadFile(selectedFiles)}
+            onClick={() => {
+              handleUploadFile(selectedFiles, addFile);
+              onClose();
+            }}
             className="px-4 py-2 bg-primary rounded hover:bg-accent"
           >
             Confirm

@@ -1,17 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import FilesGrid from "@/components/files/grid";
 import FilesSwitcher from "@/components/files/switcher";
 import FilesList from "@/components/files/list";
-import FileType from "@/types/file";
+import { useFilesListContext } from "@/contexts/files-list";
+import apiClient from "@/services/api";
 
-type FilesRootProps = {
-  files: FileType[];
-};
+export default function FilesRoot() {
+  const { files, setFiles } = useFilesListContext();
+  useEffect(() => {
+    apiClient.get("/files").then((response) => {
+      setFiles(response.data);
+    });
+  }, [setFiles]);
 
-export default function FilesRoot({ files }: FilesRootProps) {
   const [layout, setLayout] = useState("grid");
 
   const listComponent = <FilesList files={files} />;

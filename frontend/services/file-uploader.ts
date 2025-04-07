@@ -1,8 +1,9 @@
 import apiClient from "@/services/api";
 import axios from "axios";
 import { toast } from "react-toastify";
+import FileType from "@/types/file";
 
-export default async function handleUploadFile(files: File[]) {
+export default async function handleUploadFile(files: File[], addFile: (file: FileType) => void) {
   for (const file of files) {
     const data = { filename: file.name };
     const response = await apiClient.post("/bucket/generate-upload-url", data);
@@ -31,6 +32,7 @@ export default async function handleUploadFile(files: File[]) {
       continue;
     }
 
+    addFile(saveResponse.data);
     toast.success(`Arquivo enviado com sucesso: ${file.name}`);
   }
 }
