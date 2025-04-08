@@ -9,7 +9,7 @@ type ContextType = {
   removeFile: (id: UUID) => void;
 };
 
-const FilesListContext = createContext<ContextType>();
+const FilesListContext = createContext<ContextType>({} as ContextType);
 
 export const useFilesListContext = () => useContext(FilesListContext);
 
