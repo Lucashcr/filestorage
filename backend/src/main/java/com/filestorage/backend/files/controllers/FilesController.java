@@ -12,6 +12,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,5 +46,15 @@ public class FilesController {
         File fileToSave = new File(null, file.type(), file.title(), file.path(), file.size(), user.getId());
         File responseFile = filesRepository.save(fileToSave);
         return responseFile;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteFileByID(@PathVariable UUID id, @AuthenticationPrincipal User user) {
+        Optional<File> fileToDelete = filesRepository.findById(id);
+        if (!fileToDelete.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        filesRepository.delete(fileToDelete.get());
+        return ResponseEntity.noContent().build();
     }
 }

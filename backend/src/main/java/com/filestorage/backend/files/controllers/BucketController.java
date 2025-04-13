@@ -94,4 +94,22 @@ public class BucketController {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
+
+    @PostMapping("generate-delete-url")
+    public ResponseEntity<?> getDeleteFileUrl(@AuthenticationPrincipal User user, @RequestBody GetUploadUrlDto data) {
+        String bucketName = user.getId().toString();
+        
+        try {
+            if (!bucketRepository.bucketExists(bucketName)) {
+                logger.info("Tried to download file from non-existent bucket: " + bucketName);
+                return ResponseEntity.badRequest().body("Bucket does not exist");
+            }
+
+            String fileUrl = bucketRepository.getDeleteFileUrl(bucketName, data.filename());
+            FileUrlResponseDTO response = new FileUrlResponseDTO(fileUrl);
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
 }

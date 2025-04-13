@@ -11,11 +11,13 @@ import {
 
 const iconSelector: Map<string, IconType> = new Map();
 iconSelector.set("folder", MdFolder);
-iconSelector.set("image", MdImage);
+iconSelector.set("image/jpeg", MdImage);
+iconSelector.set("image/png", MdImage);
 iconSelector.set("audio", MdAudiotrack);
-iconSelector.set("video", MdVideocam);
-iconSelector.set("document", MdPictureAsPdf);
-iconSelector.set("text", MdTextSnippet);
+iconSelector.set("video/mp4", MdVideocam);
+iconSelector.set("application/pdf", MdPictureAsPdf);
+iconSelector.set("text/markdown", MdTextSnippet);
+iconSelector.set("application/vnd.openxmlformats-officedocument.wordprocessingml.document", MdTextSnippet);
 
 export default function selectIconType(type: string): IconType {
   return iconSelector.get(type) || MdFilePresent;

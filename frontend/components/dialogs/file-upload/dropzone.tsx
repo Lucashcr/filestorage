@@ -12,7 +12,7 @@ export default function UploadFileDialogDropzone({
 }: UploadFileDialogDropzoneProps) {
   return (
     <div
-      className="flex justify-center items-center py-8 border border-dashed border-[4px] rounded"
+      className="flex justify-center items-center py-8 border border-dashed rounded"
       onDragEnter={(event) => {
         event.preventDefault();
         event.stopPropagation();

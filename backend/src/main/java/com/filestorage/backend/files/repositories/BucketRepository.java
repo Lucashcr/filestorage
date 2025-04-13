@@ -98,4 +98,15 @@ public class BucketRepository {
                 .build();
         return client.getPresignedObjectUrl(args);
     }
+
+    public String getDeleteFileUrl(String bucketName, String fileTitle)
+            throws ErrorResponseException, InvalidKeyException, IOException, MinioException, NoSuchAlgorithmException {
+        GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
+                .bucket(bucketName)
+                .object(fileTitle)
+                .expiry(60 * 1)
+                .method(Method.DELETE)
+                .build();
+        return client.getPresignedObjectUrl(args);
+    }
 }

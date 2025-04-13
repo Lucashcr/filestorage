@@ -2,12 +2,15 @@ import FileType from "@/types/file";
 import FileSizeFormatter from "./helpers/file-size-formatter";
 import selectIconType from "@/utils/icon-type-selector";
 import FileDownloadIcon from "./helpers/file-download-icon";
+import { Dispatch, SetStateAction } from "react";
+import FileDeleteIcon from "@/components/files/helpers/file-delete-icon";
 
 type FilesListProps = {
   files: FileType[];
+  setFileToDelete: Dispatch<SetStateAction<FileType | null>>;
 };
 
-export default function FilesList({ files }: FilesListProps) {
+export default function FilesList({ files, setFileToDelete }: FilesListProps) {
   return (
     <div className="w-full flex flex-col gap-2">
       {files.map((file) => (
@@ -19,6 +22,7 @@ export default function FilesList({ files }: FilesListProps) {
           <p className="grow">{file.title}</p>
           <FileSizeFormatter size={file.size} className="text-sm" />
           <FileDownloadIcon file={file} />
+          <FileDeleteIcon file={file} setFileToDelete={setFileToDelete} />
         </div>
       ))}
     </div>
