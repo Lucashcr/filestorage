@@ -49,6 +49,18 @@ Isso irá inicializar:
 
 ---
 
+### 4. Configure o domínio do bucket (se estiver usando localmente)
+
+Devido à conexão da rede interna do Docker, provavelmente você terá problemas ao salvar, recuperar ou deletar arquivos já que o domínio configurado no backend é o interno da rede e as chamadas são feitas pelo frontend utilizando urls pré-assinadas. Para resolver isso, adicione o domínio `minio` redirecionando para o localhost.
+
+Se você estiver utilizando Linux, basta adicionar a seguinte linha no arquivo `/etc/hosts`:
+
+```
+127.0.0.1  	minio
+```
+
+---
+
 ## 📂 Estrutura de Pastas
 
 ```
