@@ -1,7 +1,24 @@
 services:
-  # backend:
-  
-  # frontend:
+  backend:
+    build: ./backend
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_URL=jdbc:postgresql://postgresql:5432/filestorage
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=password
+      - JWT_SECRET_KEY=secret-key
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000
+      - BUCKET_ENDPOINT=http://minio:9000
+      - BUCKET_ACCESS_KEY=minioaccesskey
+      - BUCKET_SECRET_KEY=miniosecretkey
+    depends_on:
+      - postgresql
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
 
   postgresql:
     image: postgres:16
@@ -14,30 +31,6 @@ services:
     volumes:
       - ./.docker/postgresql/data:/var/lib/postgresql/data
   
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
-    ports:
-      - 9200:9200
-    environment:
-      - node.name=es01
-      - cluster.name=elasticsearch-cluster
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
-      - xpack.license.self_generated.type=basic
-    volumes:
-      - escerts:/usr/share/elasticsearch/config/certs
-      - esdata:/usr/share/elasticsearch/data
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.15.3
-    ports:
-      - 5601:5601
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-    depends_on:
-      - elasticsearch
-
   minio:
     image: quay.io/minio/minio
     command: server /data --console-address ":9001"
@@ -49,18 +42,3 @@ services:
     ports:
       - 9000:9000
       - 9001:9001
-    
-volumes:
-  escerts:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./.docker/elasticsearch/certs
-      o: bind
-
-  esdata:
-    driver: local
-    driver_opts:
-      type: none
-      device: ./.docker/elasticsearch/data
-      o: bind
